@@ -1,44 +1,28 @@
 <?php
-session_start ();
 
-$host = "localhost";
-$user = "root";
-$pass = "root";
-$db = "sistema_simples_ANA";
+include("infra/db/connect.php");
 
-$conn = new mysqli ($host, $user, $pass, $db);
+if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-if ($conn -> connect_error){
-    die("Erro na conexão");
-}else{
-    echo ("<p> BD: ok </p>");
-}
+    $usuario = $_POST["usuario"];
+    $senha = $_POST["senha"];
 
-if ($_SERVER ["REQUEST_METHOD"] == "POST"){
+    $sql = "SELECT * FROM users 
+    WHERE username = '$usuario' 
+    AND password = '$senha'";
 
-    $usuario = $_POST ["usuario"];
-    $senha = $_POST ["senha"];
+    $resultado = $conn -> query($sql);
 
-
-    $sql = "SELECT * FROM usuarios 
-    WHERE usuario = '$usuario'
-    AND senha = '$senha'";
-
-    $resultado = $conn -> query ($sql); 
-
-    if ($resultado -> num_rows > 0){
-        $_SESSION ["usuario"] = $usuario;
-        header ("Location: public/home.php");
-        exit ();
+    if($resultado -> num_rows > 0){
+        $_SESSION["usuario"] = $usuario;
+        header("Location: public/home.php");
+        exit();
     }else{
         $erro = "Usuário ou senha inválidos.";
     }
-
 }
 
 ?>
-
-
 
 <html lang="en">
 <head>
@@ -47,27 +31,29 @@ if ($_SERVER ["REQUEST_METHOD"] == "POST"){
     <title>Login com PHP</title>
 </head>
 <body>
-    <h2> Login com PHP</h2>
+     <?php
+    include("public/component/navbar.php");
+    ?>
+    <h2>Login com PHP</h2><form method="POST">
+        <label for="usuario">Usuario:</label>
+        <input type="text" name="usuario">
+        <br>
+        <br>
+        <label for="senha">Senha:</label>
+        <input type="password" name="senha">
+        <br>
+        <br>
+        <?php
 
- <form method="POST">
+            if(isset($erro)){
+                echo $erro;
+            }
+        ?>
+        <button type="submit">Entrar</button>
+    </form>
+    
 
- <label for="usuario"> Usuário: </label>
- <input type="text" name="usuario">
-    <br>
-    <br>
-<label for="senha"> Senha: </label>
- <input type="password" name="senha">
-    <br>
-    <br>
-<button type="submit"> Entrar </button>
-</form>
 
-<?php
-
-if (isset ($erro)){
-    echo $erro;
-}
-?>
     
 </body>
 </html>
