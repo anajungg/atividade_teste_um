@@ -48,3 +48,22 @@ O arquivo index.php é a página de login do sistema. Na pasta infra/db, estão 
 Na pasta public, ficam as páginas do sistema, como a home.php, exibida após o login, e a logout.php, responsável por encerrar a sessão do usuário. A pasta component contém componentes reutilizáveis da aplicação.
 
 O arquivo style.css é responsável pela aparência visual das páginas, e o README.md contém a documentação do projeto.
+
+## Funcionalidade de Exclusão de Usuários (Não Concluída)
+A funcionalidade de exclusão não foi concluída durante o desenvolvimento do projeto. Entretanto, foi realizado o estudo da lógica que era necessária para concluir a atividade proposta
+
+### Como a Funcionalidade Poderia Ser Implementada
+Seria necessário adicionar um botão de exclusão na tabela de usuários cadastrados. Ao clicar nesse botão, o ID do usuário seria enviado para um arquivo PHP responsável por executar o comando SQL de remoção no banco de dados.
+
+### Arquivos que Precisariam Ser Modificados
+* index.php – inclusão do botão de exclusão na listagem de usuários.
+* excluir.php – criação da lógica de remoção dos registros.
+
+
+### Lógica Necessária
+* Capturar o ID do usuário selecionado.
+* Executar o comando SQL:
+* DELETE FROM usuarios WHERE id = ID_DO_USUARIO;
+* Atualizar a listagem de usuários após a exclusão.
+
+
